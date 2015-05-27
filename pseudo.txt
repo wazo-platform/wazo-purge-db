@@ -1,0 +1,19 @@
+arguments:
+
+
+tables:
+  cel
+  call_log
+  stat_call_on_queue
+  stat_agent_periodic
+  stat_queue_periodic
+  queue_log
+
+
+connect to database with db_uri
+
+entry_point for stevedoore
+
+for table in tables:
+    clean table
+
