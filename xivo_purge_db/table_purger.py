@@ -16,37 +16,87 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 import abc
+import datetime
+
+from sqlalchemy import func
+from xivo_dao.alchemy.call_log import CallLog
+from xivo_dao.alchemy.cel import CEL
+from xivo_dao.alchemy.queue_log import QueueLog
+from xivo_dao.alchemy.stat_agent_periodic import StatAgentPeriodic
+from xivo_dao.alchemy.stat_call_on_queue import StatCallOnQueue
+from xivo_dao.alchemy.stat_queue_periodic import StatQueuePeriodic
 
 
 class TablePurger(object):
 
     __metaclass__ = abc.ABCMeta
 
-    TABLE_NAME = ''
-    DATE_FIELD = ''
-    DATE_FORMAT = ''
-    QUERY = "DELETE FROM {0} WHERE time < ({1} - INTERVAL '{2} days')"
-
     @abc.abstractmethod
-    def purge(self):
-        pass
-
-
-class CelPurger(TablePurger):
-
-    TABLE_NAME = 'cel'
-    DATE_FIELD = 'eventtime'
-    DATE_FORMAT = ''
-
-    def purge(self):
+    def purge(self, days_to_keep, session):
         pass
 
 
 class CallLogPurger(TablePurger):
 
-    TABLE_NAME = 'call_log'
-    DATE_FIELD = 'current_date'
-    DATE_FORMAT = ''
+    def purge(self, days_to_keep, session):
+        query = (CallLog.__table__
+                 .delete()
+                 .where(CallLog.date
+                        < (func.localtimestamp() - datetime.timedelta(days=days_to_keep)))
+                 )
+        session.execute(query)
 
-    def purge(self):
-        pass
+
+class CELPurger(TablePurger):
+
+    def purge(self, days_to_keep, session):
+        query = (CEL.__table__
+                 .delete()
+                 .where(CEL.eventtime
+                        < (func.localtimestamp() - datetime.timedelta(days=days_to_keep)))
+                 )
+        session.execute(query)
+
+
+class QueueLogPurger(TablePurger):
+
+    def purge(self, days_to_keep, session):
+        query = (QueueLog.__table__
+                 .delete()
+                 .where(func.to_timestamp(QueueLog.time, 'YYYY-MM-DD HH24:MI:SS')
+                        < (func.localtimestamp() - datetime.timedelta(days=days_to_keep)))
+                 )
+        session.execute(query)
+
+
+class StatAgentPeriodicPurger(TablePurger):
+
+    def purge(self, days_to_keep, session):
+        query = (StatAgentPeriodic.__table__
+                 .delete()
+                 .where(StatAgentPeriodic.time
+                        < (func.localtimestamp() - datetime.timedelta(days=days_to_keep)))
+                 )
+        session.execute(query)
+
+
+class StatCallOnQueuePurger(TablePurger):
+
+    def purge(self, days_to_keep, session):
+        query = (StatCallOnQueue.__table__
+                 .delete()
+                 .where(StatCallOnQueue.time
+                        < (func.localtimestamp() - datetime.timedelta(days=days_to_keep)))
+                 )
+        session.execute(query)
+
+
+class StatQueuePeriodicPurger(TablePurger):
+
+    def purge(self, days_to_keep, session):
+        query = (StatQueuePeriodic.__table__
+                 .delete()
+                 .where(StatQueuePeriodic.time
+                        < (func.localtimestamp() - datetime.timedelta(days=days_to_keep)))
+                 )
+        session.execute(query)

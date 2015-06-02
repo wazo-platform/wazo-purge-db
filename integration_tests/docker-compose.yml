@@ -1,0 +1,20 @@
+sync:
+  image: n3llyb0y/wait
+  links:
+    - db
+  environment:
+    PORTS: "5432"
+db:
+  image: postgres:9.1
+  expose:
+   - "5432"
+  environment:
+   - POSTGRES_USER=asterisk
+   - POSTGRES_PASSWORD=proformatique
+   - POSTGRES_DB=asterisk
+purgedb:
+  image: xivo-purge-db-test
+  links:
+    - db
+  environment:
+    - XIVO_TEST_DB_URL=postgresql://asterisk:proformatique@db/asterisk

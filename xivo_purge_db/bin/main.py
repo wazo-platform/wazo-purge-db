@@ -19,20 +19,24 @@ import argparse
 import logging
 import xivo_dao
 
+from stevedore import enabled
 from xivo.chain_map import ChainMap
 from xivo.config_helper import read_config_file_hierarchy
 from xivo.daemonize import pidfile_context
 from xivo.xivo_logging import setup_logging
+from xivo_dao.helpers.db_manager import daosession
 from xivo_purge_db.data_purger import DataPurger
-from xivo_purge_db.table_purger import CelPurger, CallLogPurger
+from xivo_purge_db.table_purger import CallLogPurger
+from xivo_purge_db.table_purger import CELPurger
+from xivo_purge_db.table_purger import QueueLogPurger
+from xivo_purge_db.table_purger import StatAgentPeriodicPurger
+from xivo_purge_db.table_purger import StatCallOnQueuePurger
+from xivo_purge_db.table_purger import StatQueuePeriodicPurger
 
-PIDFILENAME = '/var/run/xivo-purge-db.pid'
+
 _DEFAULT_CONFIG = {
-    'logfile': '/var/log/xivo-purge-db.log',
-    'pidfile': '/var/run/xivo-purge-db.pid',
     'config_file': '/etc/xivo-purge-db/config.yml',
-    'extra_config_files': '/etc/xivo-purge-db/conf.d',
-    'debug': False,
+    'extra_config_files': '/etc/xivo-purge-db/conf.d/'
 }
 
 logger = logging.getLogger(__name__)
@@ -43,31 +47,47 @@ def main():
     file_config = read_config_file_hierarchy(ChainMap(cli_config, _DEFAULT_CONFIG))
     config = ChainMap(cli_config, file_config, _DEFAULT_CONFIG)
 
-    setup_logging(config['logfile'], True, config['debug'])
+    setup_logging(config['log_file'], foreground=True, debug=config['debug'])
 
     xivo_dao.init_db_from_config(config)
 
-    with pidfile_context(PIDFILENAME, foreground=True):
+    with pidfile_context(config['pid_file'], foreground=True):
+        if 'archives' in config.get('enabled_plugins', {}):
+            _load_plugins(config['enabled_plugins']['archives'], config['days_to_keep'])
         _purge_tables(config['days_to_keep'])
 
 
-def _purge_tables(days_to_keep):
-    table_purgers = []
-    table_purgers.append(CelPurger())
-    table_purgers.append(CallLogPurger())
+def _load_plugins(enabled_archives, days_to_keep):
+    check_func = lambda extension: extension.name in enabled_archives
+    enabled.EnabledExtensionManager(namespace='xivo_purge_db.archives',
+                                    check_func=check_func,
+                                    invoke_args=(days_to_keep,),
+                                    invoke_on_load=True)
 
-    data_purger = DataPurger(days_to_keep, table_purgers)
-    data_purger.delete_old_entries()
+
+@daosession
+def _purge_tables(session, days_to_keep):
+    table_purgers = []
+    table_purgers.append(CallLogPurger())
+    table_purgers.append(CELPurger())
+    table_purgers.append(QueueLogPurger())
+    table_purgers.append(StatAgentPeriodicPurger())
+    table_purgers.append(StatCallOnQueuePurger())
+    table_purgers.append(StatQueuePeriodicPurger())
+
+    data_purger = DataPurger(table_purgers)
+    data_purger.delete_old_entries(days_to_keep, session)
 
 
 def _parse_args():
     config = {}
     parser = argparse.ArgumentParser()
     parser.add_argument('-d', '--days_to_keep',
+                        type=int,
                         help='Number of days data will be kept in tables')
 
     parsed_args = parser.parse_args()
-    if parsed_args.days_to_keep:
+    if parsed_args.days_to_keep is not None:
         config['days_to_keep'] = parsed_args.days_to_keep
 
     return config

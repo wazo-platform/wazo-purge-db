@@ -4,13 +4,17 @@
 
 # Extra configuration directory where the config files overriding this file
 # should be.
-extra_config_files: /etc/xivo-call-logd/conf.d/
+extra_config_files: '/etc/xivo-purge-db/conf.d/'
+
+pid_file: '/var/run/xivo-purge-db.pid'
+log_file: '/var/log/xivo-purge-db.log'
 
 # Database connection informations.
-db_uri: postgresql://asterisk:proformatique@localhost/asterisk
-
-log_filename: /var/log/xivo-purge-db.log
+db_uri: 'postgresql://asterisk:proformatique@localhost/asterisk'
 
 days_to_keep: 365
+debug: False
 
-
+enabled_plugins:
+    archives:
+#        - sample

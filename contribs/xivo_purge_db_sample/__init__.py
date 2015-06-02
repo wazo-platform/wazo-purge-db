@@ -14,20 +14,3 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
-
-from xivo_dao.tests.test_dao import DAOTestCase
-class TestTablePurger(DAOTestCase):
-
-    def _insert_cels(self, cels):
-        self.add_me_all(cels)
-
-    def test_caller_id_by_unique_id_when_unique_id_is_present(self):
-        self._insert_cels([
-            _new_cel(eventtype='CHAN_START', cid_name='name1', cid_num='num1',
-                     uniqueid='1'),
-            _new_cel(eventtype='APP_START', cid_name='name2', cid_num='num2',
-                     uniqueid='2'),
-        ])
-
-        self.assertEqual('"name2" <num2>', cel_dao.caller_id_by_unique_id('2'))
-

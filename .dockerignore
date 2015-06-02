@@ -1,0 +1,6 @@
+*.pyc
+.git
+debian
+LICENSE
+Makefile
+README.md
