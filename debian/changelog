@@ -1,3 +1,9 @@
+xivo-purge-db (15.11~1-2) STABLE; urgency=medium
+
+  * Add logrotate file
+
+ -- Francois Blackburn <fblackburn@avencall.com>  Mon, 08 Jun 2015 12:08:54 -0400
+
 xivo-purge-db (15.11~1-1) STABLE; urgency=medium
 
   * Initial release.
