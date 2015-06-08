@@ -1,0 +1,5 @@
+xivo-purge-db (15.11~1-1) STABLE; urgency=medium
+
+  * Initial release.
+
+ -- Francois Blackburn <fblackburn@avencall.com>  Mon, 08 Jun 2015 11:38:42 -0400

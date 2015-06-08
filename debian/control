@@ -14,8 +14,7 @@ Section: python
 Depends: ${python:Depends},
          ${misc:Depends},
          xivo-libdao (>= 15.06~20150319.161854.821d733-1),
-         xivo-lib-python,
-         python-kombu
+         xivo-lib-python
 Description: XiVO database cleaner
  XiVO is a system based on a powerful IPBX, to bring an easy to
  install solution for telephony and related services.
