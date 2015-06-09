@@ -22,7 +22,7 @@ To run the unittests
 
 You need:
 
-    - docker
+- docker
 
 A docker image named `xivo-purge-db-test` is required to execute the test suite.
 To build this image execute:
@@ -33,10 +33,10 @@ To build this image execute:
 
 There are two steps in preparing the integration tests:
 
-    - `make test-setup`: time consuming, but only needs to be run when
-      dependencies of xivo-purge-db change in any way.
-    - `make test-image`: a lot faster, and needs to be run when the code of
-      xivo-purge-db changes.
+- `make test-setup`: time consuming, but only needs to be run when
+  dependencies of xivo-purge-db change in any way.
+- `make test-image`: a lot faster, and needs to be run when the code of
+  xivo-purge-db changes.
 
 To execute the integration tests execute:
 
