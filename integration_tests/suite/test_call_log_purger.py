@@ -17,7 +17,10 @@
 
 from datetime import datetime, timedelta
 
-from hamcrest import all_of, assert_that, empty, has_property, only_contains
+from hamcrest import assert_that
+from hamcrest import contains_inanyorder
+from hamcrest import empty
+from hamcrest import has_property
 
 from xivo_dao.alchemy.call_log import CallLog as CallLogSchema
 from xivo_dao.tests.test_dao import DAOTestCase
@@ -66,11 +69,9 @@ class TestCallLogPurger(DAOTestCase):
 
         result = self.session.query(CallLogSchema).all()
 
-        assert_that(result, only_contains(
-            all_of(has_property('id', id_entry0)),
-            all_of(has_property('id', id_entry1)),
-            all_of(has_property('id', id_entry2)),
-            ))
+        assert_that(result, contains_inanyorder(has_property('id', id_entry0),
+                                                has_property('id', id_entry1),
+                                                has_property('id', id_entry2)))
 
     def test_that_CallLogPurger_keep_only_recent_entry(self):
         days_to_keep = 90
@@ -84,10 +85,8 @@ class TestCallLogPurger(DAOTestCase):
 
         result = self.session.query(CallLogSchema).all()
 
-        assert_that(result, only_contains(
-            all_of(has_property('id', id_entry1)),
-            all_of(has_property('id', id_entry2)),
-            ))
+        assert_that(result, contains_inanyorder(has_property('id', id_entry1),
+                                                has_property('id', id_entry2)))
 
     def test_that_CallLogPurger_do_nothing_when_no_entry(self):
         days_to_keep = 90

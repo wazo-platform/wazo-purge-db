@@ -18,13 +18,15 @@
 import logging
 import os
 import subprocess
+import textwrap
 
-from hamcrest import assert_that, equal_to
+from hamcrest import assert_that
+from hamcrest import is_
 from unittest import TestCase
 
 extra_config_path = '/etc/xivo-purge-db/conf.d'
 extra_config_filename = 'extra-config-sample'
-extra_config_file = '{}/{}'.format(extra_config_path, extra_config_filename)
+extra_config_file = os.path.join(extra_config_path, extra_config_filename)
 
 sample_output_file = '/tmp/xivo_purge_db.sample'
 
@@ -34,15 +36,15 @@ logger = logging.getLogger(__name__)
 class TestSamplePlugin(TestCase):
 
     def setUp(self):
-        extra_config_plugins = ("enabled_plugins:\n"
-                                "    archives:\n"
-                                "       - sample\n")
-
-        extra_config_db_uri = ("db_uri: 'postgresql://asterisk:proformatique@db/asterisk'")
+        extra_config = textwrap.dedent("""
+            enabled_plugins:
+                archives:
+                - sample
+            db_uri: 'postgresql://asterisk:proformatique@db/asterisk'
+            """)
 
         with open(extra_config_file, 'w') as config_file:
-            config_file.write(extra_config_plugins)
-            config_file.write(extra_config_db_uri)
+            config_file.write(extra_config)
 
     def tearDown(self):
         if os.path.exists(extra_config_file):
@@ -60,4 +62,4 @@ class TestSamplePlugin(TestCase):
 
         file_exists = os.path.exists(sample_output_file)
 
-        assert_that(file_exists, equal_to(True))
+        assert_that(file_exists, is_(True))
