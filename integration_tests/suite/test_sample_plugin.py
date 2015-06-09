@@ -20,7 +20,7 @@ import os
 import subprocess
 
 from hamcrest import assert_that, equal_to
-from xivo_dao.tests.test_dao import DAOTestCase
+from unittest import TestCase
 
 extra_config_path = '/etc/xivo-purge-db/conf.d'
 extra_config_filename = 'extra-config-sample'
@@ -31,10 +31,9 @@ sample_output_file = '/tmp/xivo_purge_db.sample'
 logger = logging.getLogger(__name__)
 
 
-class TestSamplePlugin(DAOTestCase):
+class TestSamplePlugin(TestCase):
 
     def setUp(self):
-        super(TestSamplePlugin, self).setUp()
         extra_config_plugins = ("enabled_plugins:\n"
                                 "    archives:\n"
                                 "       - sample\n")
@@ -46,7 +45,6 @@ class TestSamplePlugin(DAOTestCase):
             config_file.write(extra_config_db_uri)
 
     def tearDown(self):
-        super(TestSamplePlugin, self).tearDown()
         if os.path.exists(extra_config_file):
             self._run_cmd('rm {}'.format(extra_config_file))
         if os.path.exists(sample_output_file):
