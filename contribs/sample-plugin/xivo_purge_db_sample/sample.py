@@ -22,4 +22,4 @@ class SamplePlugin(object):
 
     def __init__(self, days_to_keep):
         with open(sample_file, 'w') as output:
-            output.write('Save table before purge. {0} days to keep!'.format(days_to_keep))
+            output.write('Save tables before purge. {0} days to keep!'.format(days_to_keep))

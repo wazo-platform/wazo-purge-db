@@ -39,7 +39,7 @@ class TestSamplePlugin(TestCase):
         extra_config = textwrap.dedent("""
             enabled_plugins:
                 archives:
-                - sample
+                    - sample
             db_uri: 'postgresql://asterisk:proformatique@db/asterisk'
             """)
 
