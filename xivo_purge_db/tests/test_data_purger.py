@@ -22,13 +22,11 @@ from xivo_purge_db.data_purger import DataPurger
 
 
 class TestDataPurger(TestCase):
+
     def setUp(self):
         self.purger1, self.purger2, self.purger3 = Mock(), Mock(), Mock()
         table_purgers = [self.purger1, self.purger2, self.purger3]
         self.data_purger = DataPurger(table_purgers)
-
-    def tearDown(self):
-        pass
 
     def test_that_DataPurger_call_every_purger(self):
         days_to_keep = 365
