@@ -7,10 +7,10 @@ RUN pip install -r requirements.txt
 RUN pip install -r test-requirements.txt
 RUN python setup.py install
 
-WORKDIR contribs
+WORKDIR contribs/sample-plugin
 RUN python setup.py install
-WORKDIR ..
 
+WORKDIR /usr/src/xivo-purge-db
 RUN rsync -av etc/ /etc
 
 CMD nosetests integration_tests/suite
