@@ -53,15 +53,16 @@ def main():
 
     with pidfile_context(config['pid_file'], foreground=True):
         if 'archives' in config.get('enabled_plugins', {}):
-            _load_plugins(config['enabled_plugins']['archives'], config['days_to_keep'])
+            _load_plugins(config)
         _purge_tables(config['days_to_keep'])
 
 
-def _load_plugins(enabled_archives, days_to_keep):
+def _load_plugins(config):
+    enabled_archives = config['enabled_plugins']['archives']
     check_func = lambda extension: extension.name in enabled_archives
     enabled.EnabledExtensionManager(namespace='xivo_purge_db.archives',
                                     check_func=check_func,
-                                    invoke_args=(days_to_keep,),
+                                    invoke_args=(config,),
                                     invoke_on_load=True)
 
 

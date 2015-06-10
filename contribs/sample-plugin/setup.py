@@ -16,7 +16,7 @@ setup(
     packages=find_packages(),
     entry_points={
         'xivo_purge_db.archives': [
-            'sample = xivo_purge_db_sample.sample:SamplePlugin',
+            'sample = xivo_purge_db_sample.sample:sample_plugin',
         ],
     }
 )

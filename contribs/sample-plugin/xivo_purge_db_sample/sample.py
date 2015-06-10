@@ -18,8 +18,6 @@
 sample_file = '/tmp/xivo_purge_db.sample'
 
 
-class SamplePlugin(object):
-
-    def __init__(self, days_to_keep):
-        with open(sample_file, 'w') as output:
-            output.write('Save tables before purge. {0} days to keep!'.format(days_to_keep))
+def sample_plugin(config):
+    with open(sample_file, 'w') as output:
+        output.write('Save tables before purge. {0} days to keep!'.format(config['days_to_keep']))
