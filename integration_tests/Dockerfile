@@ -11,6 +11,6 @@ WORKDIR contribs/sample-plugin
 RUN python setup.py install
 
 WORKDIR /usr/src/xivo-purge-db
-RUN rsync -av etc/ /etc
+RUN cp -r etc/ /etc
 
 CMD nosetests integration_tests/suite
