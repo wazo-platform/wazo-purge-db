@@ -42,4 +42,3 @@ To execute the integration tests execute:
 
     % docker-compose run sync
     % docker-compose run purgedb
-
