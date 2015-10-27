@@ -25,7 +25,7 @@ from hamcrest import is_
 from unittest import TestCase
 
 extra_config_path = '/etc/xivo-purge-db/conf.d'
-extra_config_filename = 'extra-config-sample'
+extra_config_filename = 'extra-config-sample.yml'
 extra_config_file = os.path.join(extra_config_path, extra_config_filename)
 
 sample_output_file = '/tmp/xivo_purge_db.sample'
