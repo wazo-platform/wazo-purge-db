@@ -28,6 +28,7 @@ A docker image named `xivo-purge-db-test` is required to execute the test suite.
 To build this image execute:
 
     % cd integration_tests
+    % pip install -r docker-requirements.txt
     % make test-setup
     % make test-image
 

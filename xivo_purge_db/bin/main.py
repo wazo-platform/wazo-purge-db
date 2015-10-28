@@ -24,7 +24,7 @@ from xivo.chain_map import ChainMap
 from xivo.config_helper import read_config_file_hierarchy
 from xivo.daemonize import pidfile_context
 from xivo.xivo_logging import setup_logging
-from xivo_dao.helpers.db_manager import daosession
+from xivo_dao.helpers.db_utils import session_scope
 from xivo_purge_db.data_purger import DataPurger
 from xivo_purge_db.table_purger import CallLogPurger
 from xivo_purge_db.table_purger import CELPurger
@@ -66,8 +66,7 @@ def _load_plugins(config):
                                     invoke_on_load=True)
 
 
-@daosession
-def _purge_tables(session, days_to_keep):
+def _purge_tables(days_to_keep):
     table_purgers = []
     table_purgers.append(CallLogPurger())
     table_purgers.append(CELPurger())
@@ -77,7 +76,9 @@ def _purge_tables(session, days_to_keep):
     table_purgers.append(StatQueuePeriodicPurger())
 
     data_purger = DataPurger(table_purgers)
-    data_purger.delete_old_entries(days_to_keep, session)
+
+    with session_scope() as session:
+        data_purger.delete_old_entries(days_to_keep, session)
 
 
 def _parse_args():
