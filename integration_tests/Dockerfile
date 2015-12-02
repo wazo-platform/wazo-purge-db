@@ -4,7 +4,7 @@ ADD . /usr/src/xivo-purge-db
 WORKDIR /usr/src/xivo-purge-db
 
 RUN pip install -r requirements.txt
-RUN pip install -r integration_tests/test-requirements.txt
+RUN pip install -r integration_tests/requirements.txt
 RUN python setup.py install
 
 WORKDIR contribs/sample-plugin
