@@ -1,4 +1,4 @@
-xivo-purge-db (15.11~1-2) STABLE; urgency=medium
+xivo-purge-db (15.11~1) xivo-dev; urgency=medium
 
   * Add logrotate file
 
