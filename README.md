@@ -4,42 +4,25 @@ xivo-purge-db
 
 xivo-purge-db is a service for deleting (and optionally backup) old database entries on a XiVO server
 
-## Testing
 
-xivo-purge-db contains unittests and integration tests
+Running unit tests
+------------------
 
-### unittests
+```
+apt-get install libpq-dev python-dev libyaml-dev
+pip install tox
+tox --recreate -e py27
+```
 
-Dependencies to run the unittests are in the `test-requirements.txt` file.
 
-    % pip install -r requirements.txt -r test-requirements.txt
+Running integration tests
+-------------------------
 
-To run the unittests
+You need Docker installed.
 
-    % nosetests xivo_purge_db
-
-### Integration tests
-
-You need:
-
-- docker
-
-A docker image named `xivo-purge-db-test` is required to execute the test suite.
-To build this image execute:
-
-    % cd integration_tests
-    % pip install -r docker-requirements.txt
-    % make test-setup
-    % make test-image
-
-There are two steps in preparing the integration tests:
-
-- `make test-setup`: time consuming, but only needs to be run when
-  dependencies of xivo-purge-db change in any way.
-- `make test-image`: a lot faster, and needs to be run when the code of
-  xivo-purge-db changes.
-
-To execute the integration tests execute:
-
-    % docker-compose run sync
-    % docker-compose run purgedb
+```
+cd integration_tests
+pip install -U -r test-requirements.txt
+make test-setup
+make test
+```
