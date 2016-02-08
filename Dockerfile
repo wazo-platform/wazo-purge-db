@@ -16,4 +16,4 @@ RUN pip install -r requirements.txt
 RUN cp -r etc/ /etc
 RUN ./setup.py install
 
-CMD xivo-purge-db
+CMD ["xivo-purge-db"]

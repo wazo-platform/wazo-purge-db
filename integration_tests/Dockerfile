@@ -13,4 +13,4 @@ RUN python setup.py install
 WORKDIR /usr/src/xivo-purge-db
 RUN cp -r etc/xivo-purge-db /etc
 
-CMD nosetests integration_tests/suite
+CMD ["nosetests", "integration_tests/suite"]
