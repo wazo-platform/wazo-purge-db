@@ -26,3 +26,16 @@ pip install -U -r test-requirements.txt
 make test-setup
 make test
 ```
+
+
+Developing
+----------
+
+When you're developing, once you have done the setup above, you may run
+integration tests faster with:
+
+```
+cd integration_tests
+docker-compose run sync
+docker-compose run purgedb  # repeat to run the tests against new code
+```

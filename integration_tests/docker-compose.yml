@@ -18,3 +18,5 @@ purgedb:
     - db
   environment:
     - XIVO_TEST_DB_URL=postgresql://asterisk:proformatique@db/asterisk
+  volumes:
+    - "..:/usr/src/xivo-purge-db"
