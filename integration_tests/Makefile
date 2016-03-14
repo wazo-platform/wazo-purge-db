@@ -2,7 +2,7 @@
 
 test-setup:
 	docker pull n3llyb0y/wait
-	docker pull postgres:9.1
+	docker pull postgres:9.4
 	docker pull python:2.7
 
 test-image:
