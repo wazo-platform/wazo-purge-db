@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Copyright (C) 2015 Avencall
+# Copyright (C) 2016 Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -32,6 +32,7 @@ from xivo_purge_db.table_purger import QueueLogPurger
 from xivo_purge_db.table_purger import StatAgentPeriodicPurger
 from xivo_purge_db.table_purger import StatCallOnQueuePurger
 from xivo_purge_db.table_purger import StatQueuePeriodicPurger
+from xivo_purge_db.table_purger import StatSwitchboardPurger
 
 
 _DEFAULT_CONFIG = {
@@ -74,6 +75,7 @@ def _purge_tables(days_to_keep):
     table_purgers.append(StatAgentPeriodicPurger())
     table_purgers.append(StatCallOnQueuePurger())
     table_purgers.append(StatQueuePeriodicPurger())
+    table_purgers.append(StatSwitchboardPurger())
 
     data_purger = DataPurger(table_purgers)
 
