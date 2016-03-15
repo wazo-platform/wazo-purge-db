@@ -25,6 +25,7 @@ from xivo_dao.alchemy.queue_log import QueueLog
 from xivo_dao.alchemy.stat_agent_periodic import StatAgentPeriodic
 from xivo_dao.alchemy.stat_call_on_queue import StatCallOnQueue
 from xivo_dao.alchemy.stat_queue_periodic import StatQueuePeriodic
+from xivo_dao.alchemy.stat_switchboard_queue import StatSwitchboardQueue
 
 
 class TablePurger(object):
@@ -97,6 +98,17 @@ class StatQueuePeriodicPurger(TablePurger):
         query = (StatQueuePeriodic.__table__
                  .delete()
                  .where(StatQueuePeriodic.time
+                        < (func.localtimestamp() - datetime.timedelta(days=days_to_keep)))
+                 )
+        session.execute(query)
+
+
+class StatSwitchboardPurger(TablePurger):
+
+    def purge(self, days_to_keep, session):
+        query = (StatSwitchboardQueue.__table__
+                 .delete()
+                 .where(StatSwitchboardQueue.time
                         < (func.localtimestamp() - datetime.timedelta(days=days_to_keep)))
                  )
         session.execute(query)
