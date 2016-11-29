@@ -6,7 +6,7 @@ test-setup:
 	docker pull python:2.7
 
 test-image:
-	docker build -t xivo/xivo-purge-db ..
+	docker build -t wazopbx/xivo-purge-db ..
 	docker build --no-cache -t xivo-purge-db-test -f Dockerfile ..
 
 test: test-image
