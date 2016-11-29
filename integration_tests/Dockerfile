@@ -1,4 +1,4 @@
-FROM xivo/xivo-purge-db
+FROM wazopbx/xivo-purge-db
 
 ADD . /usr/src/xivo-purge-db
 WORKDIR /usr/src/xivo-purge-db
