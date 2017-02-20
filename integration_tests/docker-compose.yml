@@ -12,6 +12,8 @@ db:
    - POSTGRES_USER=asterisk
    - POSTGRES_PASSWORD=proformatique
    - POSTGRES_DB=asterisk
+  volumes:
+    - "./initdb.sql:/docker-entrypoint-initdb.d/initdb.sql"
 purgedb:
   image: xivo-purge-db-test
   links:
