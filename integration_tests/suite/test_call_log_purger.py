@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2015 Avencall
+# Copyright 2015-2017 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
 from datetime import datetime, timedelta
@@ -25,7 +25,6 @@ class TestCallLogPurger(DAOTestCase):
     def add_call_log(self, **kwargs):
         kwargs.setdefault('id', self._generate_int())
         kwargs.setdefault('date', datetime.now())
-        kwargs.setdefault('duration', timedelta(1))
         call_log = CallLogSchema(**kwargs)
         self.add_me(call_log)
         return call_log.id
