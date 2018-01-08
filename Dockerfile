@@ -1,4 +1,4 @@
-FROM python:2.7.9
+FROM python:2.7.13
 
 RUN mkdir -p /etc/xivo-purge-db/conf.d
 
