@@ -3,7 +3,6 @@
 test-setup:
 	docker pull n3llyb0y/wait
 	docker pull postgres:9.6
-	docker pull python:2.7
 
 test-image:
 	docker build -t wazopbx/xivo-purge-db ..
