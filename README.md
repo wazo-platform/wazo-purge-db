@@ -1,6 +1,6 @@
 xivo-purge-db
 =============
-[![Build Status](https://travis-ci.org/wazo-pbx/xivo-purge-db.png?branch=master)](https://travis-ci.org/wazo-pbx/xivo-purge-db)
+[![Build Status](https://jenkins.wazo.community/buildStatus/icon?job=xivo-purge-db)](https://jenkins.wazo.community/job/xivo-purge-db)
 
 xivo-purge-db is a service for deleting (and optionally backup) old database entries on a Wazo server
 
