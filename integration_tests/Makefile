@@ -1,8 +1,8 @@
 .PHONY: test test-image test-setup
 
 test-setup:
-	docker pull n3llyb0y/wait
 	docker pull postgres:9.6
+	docker pull waisbrot/wait
 
 test-image:
 	docker build -t wazopbx/xivo-purge-db ..
