@@ -2,7 +2,7 @@
 
 test-setup:
 	docker pull postgres:9.6
-	docker pull waisbrot/wait
+	docker pull wazopbx/wait
 
 test-image:
 	docker build -t wazopbx/xivo-purge-db ..
