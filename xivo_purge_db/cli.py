@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2016 Avencall
+# Copyright 2016-2019 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
 import argparse
@@ -12,19 +12,24 @@ from xivo.config_helper import read_config_file_hierarchy
 from xivo.daemonize import pidfile_context
 from xivo.xivo_logging import setup_logging
 from xivo_dao.helpers.db_utils import session_scope
-from xivo_purge_db.data_purger import DataPurger
-from xivo_purge_db.table_purger import CallLogPurger
-from xivo_purge_db.table_purger import CELPurger
-from xivo_purge_db.table_purger import QueueLogPurger
-from xivo_purge_db.table_purger import StatAgentPeriodicPurger
-from xivo_purge_db.table_purger import StatCallOnQueuePurger
-from xivo_purge_db.table_purger import StatQueuePeriodicPurger
-from xivo_purge_db.table_purger import StatSwitchboardPurger
 
 
 _DEFAULT_CONFIG = {
     'config_file': '/etc/xivo-purge-db/config.yml',
-    'extra_config_files': '/etc/xivo-purge-db/conf.d/'
+    'extra_config_files': '/etc/xivo-purge-db/conf.d/',
+    'enabled_plugins': {
+        'purgers': {
+            'call-log': True,
+            'cel': True,
+            'queue-log': True,
+            'stat-agent': True,
+            'stat-call-on': True,
+            'stat-queue': True,
+            'stat-switchboard': True,
+        },
+        'archives': []
+    },
+    'days_to_keep': 365,
 }
 
 logger = logging.getLogger(__name__)
@@ -42,7 +47,7 @@ def main():
     with pidfile_context(config['pid_file'], foreground=True):
         if 'archives' in config.get('enabled_plugins', {}):
             _load_plugins(config)
-        _purge_tables(config['days_to_keep'])
+        _purge_tables(config)
 
 
 def _load_plugins(config):
@@ -54,20 +59,21 @@ def _load_plugins(config):
                                     invoke_on_load=True)
 
 
-def _purge_tables(days_to_keep):
-    table_purgers = []
-    table_purgers.append(CallLogPurger())
-    table_purgers.append(CELPurger())
-    table_purgers.append(QueueLogPurger())
-    table_purgers.append(StatAgentPeriodicPurger())
-    table_purgers.append(StatCallOnQueuePurger())
-    table_purgers.append(StatQueuePeriodicPurger())
-    table_purgers.append(StatSwitchboardPurger())
-
-    data_purger = DataPurger(table_purgers)
-
+def _purge_tables(config):
+    enabled_purgers = config['enabled_plugins']['purgers']
+    check_func = lambda extension: enabled_purgers.get(extension.name, False)
+    table_purgers = enabled.EnabledExtensionManager(
+        namespace='wazo_purge_db.purgers',
+        check_func=check_func,
+        invoke_on_load=True
+    )
     with session_scope() as session:
-        data_purger.delete_old_entries(days_to_keep, session)
+        for purger in table_purgers:
+            days_to_keep = config['days_to_keep']
+            logger.info('{} purger: deleting entries older than {} days'.
+                        format(purger.name, days_to_keep))
+            purger.obj.purge(days_to_keep, session)
+            logger.debug('{} purger: finished'.format(purger.name))
 
 
 def _parse_args():

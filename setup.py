@@ -18,5 +18,14 @@ setup(
         'console_scripts': [
             'xivo-purge-db = xivo_purge_db.cli:main',
         ],
+        'wazo_purge_db.purgers': [
+            'call-log = xivo_purge_db.table_purger:CallLogPurger',
+            'cel = xivo_purge_db.table_purger:CELPurger',
+            'queue-log = xivo_purge_db.table_purger:QueueLogPurger',
+            'stat-agent = xivo_purge_db.table_purger:StatAgentPeriodicPurger',
+            'stat-call-on = xivo_purge_db.table_purger:StatCallOnQueuePurger',
+            'stat-queue = xivo_purge_db.table_purger:StatQueuePeriodicPurger',
+            'stat-switchboard = xivo_purge_db.table_purger:StatSwitchboardPurger',
+        ]
     }
 )

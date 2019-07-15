@@ -15,6 +15,14 @@ db_uri: 'postgresql://asterisk:proformatique@localhost/asterisk'
 days_to_keep: 365
 debug: False
 
-#enabled_plugins:
+enabled_plugins:
+    purgers:
+        call-log: true
+        cel: true
+        queue-log: true
+        stat-agent: true
+        stat-call-on: true
+        stat-queue: true
+        stat-switchboard: true
 #    archives:
 #        - sample
