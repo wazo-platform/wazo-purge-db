@@ -14,5 +14,9 @@ setup(
     url='http://wazo.community',
     license='GPLv3',
     packages=find_packages(),
-    scripts=['bin/xivo-purge-db'],
+    entry_points={
+        'console_scripts': [
+            'xivo-purge-db = xivo_purge_db.cli:main',
+        ],
+    }
 )
