@@ -32,6 +32,7 @@ _DEFAULT_CONFIG = {
         'archives': [],
     },
     'days_to_keep': 365,
+    'days_to_keep_per_plugin': {},
 }
 
 logger = logging.getLogger(__name__)
@@ -80,7 +81,9 @@ def _purge_tables(config):
     )
     with session_scope() as session:
         for purger in table_purgers:
-            days_to_keep = config['days_to_keep']
+            days_to_keep = config['days_to_keep_per_plugin'].get(
+                purger.name, config['days_to_keep']
+            )
             logger.info(
                 '%s purger: deleting entries older than %s days'.purger.name,
                 days_to_keep,
