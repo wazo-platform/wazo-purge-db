@@ -70,10 +70,10 @@ def _purge_tables(config):
     with session_scope() as session:
         for purger in table_purgers:
             days_to_keep = config['days_to_keep']
-            logger.info('{} purger: deleting entries older than {} days'.
-                        format(purger.name, days_to_keep))
+            logger.info('%s purger: deleting entries older than %s days'.
+                        purger.name, days_to_keep)
             purger.obj.purge(days_to_keep, session)
-            logger.debug('{} purger: finished'.format(purger.name))
+            logger.debug('%s purger: finished', purger.name)
 
 
 def _parse_args():
