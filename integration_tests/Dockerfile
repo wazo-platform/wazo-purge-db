@@ -3,8 +3,8 @@ FROM wazopbx/xivo-purge-db
 ADD . /usr/src/xivo-purge-db
 WORKDIR /usr/src/xivo-purge-db
 
-RUN pip install -r requirements.txt
-RUN pip install -r integration_tests/requirements.txt
+RUN pip install -Ur requirements.txt
+RUN pip install -Ur integration_tests/requirements.txt
 RUN python setup.py develop
 
 WORKDIR contribs/sample-plugin
