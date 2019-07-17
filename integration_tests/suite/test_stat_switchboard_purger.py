@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2016 Avencall
+# Copyright 2016-2019 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
 from datetime import datetime, timedelta
@@ -22,7 +22,8 @@ class TestStatSwitchboardPurger(DAOTestCase):
         self.stat_switchboard_queue = QueueFeatures(name='stat_switchboard_queue',
                                                     displayname='stat_switchboard_queue',
                                                     number='3333',
-                                                    context='default')
+                                                    context='default',
+                                                    tenant_uuid=self.default_tenant.uuid)
         self.add_me(self.stat_switchboard_queue)
 
     def add_stat_switchboard(self, **kwargs):
