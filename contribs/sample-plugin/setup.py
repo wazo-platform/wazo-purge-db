@@ -6,17 +6,17 @@ from setuptools import find_packages
 
 
 setup(
-    name='xivo-purge-db-sample-plugin',
+    name='wazo-purge-db-sample-plugin',
     version='1.1',
     description='XiVO sample plugin for archive before database clean',
     author='Avencall',
     author_email='dev@avencall.com',
-    url='https://github.com/wazo-pbx/xivo-purge-db',
+    url='https://github.com/wazo-pbx/wazo-purge-db',
     license='GPLv3',
     packages=find_packages(),
     entry_points={
-        'xivo_purge_db.archives': [
-            'sample = xivo_purge_db_sample.sample:sample_plugin',
+        'wazo_purge_db.archives': [
+            'sample = wazo_purge_db_sample.sample:sample_plugin',
         ],
     }
 )

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2015 Avencall
+# Copyright 2015-2019 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
 from datetime import datetime, timedelta
@@ -11,7 +11,7 @@ from hamcrest import contains_inanyorder
 
 from xivo_dao.alchemy.stat_call_on_queue import StatCallOnQueue as StatCallOnQueueSchema
 from xivo_dao.tests.test_dao import DAOTestCase
-from xivo_purge_db.table_purger import StatCallOnQueuePurger
+from wazo_purge_db.table_purger import StatCallOnQueuePurger
 
 
 class TestStatCallOnQueuePurger(DAOTestCase):
