@@ -14,8 +14,9 @@ Conflicts: xivo-purge-db
 Replaces: xivo-purge-db
 Depends: ${python:Depends},
          ${misc:Depends},
-         xivo-libdao (>= 15.06~20150319.161854.821d733-1),
-         xivo-lib-python
+         rename,
+         xivo-lib-python,
+         xivo-libdao
 Description: Wazo database cleaner
  Wazo is a system based on a powerful IPBX, to bring an easy to
  install solution for telephony and related services.
