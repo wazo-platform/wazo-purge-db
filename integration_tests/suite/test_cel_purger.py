@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2015 Avencall
+# Copyright 2015-2019 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
 from datetime import datetime, timedelta
@@ -11,7 +11,7 @@ from hamcrest import has_property
 
 from xivo_dao.alchemy.cel import CEL as CELSchema
 from xivo_dao.tests.test_dao import DAOTestCase
-from xivo_purge_db.table_purger import CELPurger
+from wazo_purge_db.table_purger import CELPurger
 
 
 class TestCELPurger(DAOTestCase):

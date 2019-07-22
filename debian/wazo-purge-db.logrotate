@@ -1,4 +1,4 @@
-/var/log/xivo-purge-db.log {
+/var/log/wazo-purge-db.log {
     daily
     rotate 15
     compress

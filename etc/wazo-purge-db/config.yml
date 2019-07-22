@@ -4,10 +4,10 @@
 
 # Extra configuration directory where the config files overriding this file
 # should be.
-extra_config_files: '/etc/xivo-purge-db/conf.d/'
+extra_config_files: '/etc/wazo-purge-db/conf.d/'
 
-pid_file: '/var/run/xivo-purge-db.pid'
-log_file: '/var/log/xivo-purge-db.log'
+pid_file: '/var/run/wazo-purge-db.pid'
+log_file: '/var/log/wazo-purge-db.log'
 
 # Database connection informations.
 db_uri: 'postgresql://asterisk:proformatique@localhost/asterisk'

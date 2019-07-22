@@ -12,7 +12,7 @@ from hamcrest import has_property
 from xivo_dao.alchemy.queuefeatures import QueueFeatures
 from xivo_dao.alchemy.stat_switchboard_queue import StatSwitchboardQueue
 from xivo_dao.tests.test_dao import DAOTestCase
-from xivo_purge_db.table_purger import StatSwitchboardPurger
+from wazo_purge_db.table_purger import StatSwitchboardPurger
 
 
 class TestStatSwitchboardPurger(DAOTestCase):

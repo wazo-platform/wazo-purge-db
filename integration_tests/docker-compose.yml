@@ -20,8 +20,8 @@ services:
       - "./initdb.sql:/docker-entrypoint-initdb.d/initdb.sql"
 
   purgedb:
-    image: xivo-purge-db-test
+    image: wazo-purge-db-test
     environment:
       - XIVO_TEST_DB_URL=postgresql://asterisk:proformatique@db/asterisk
     volumes:
-      - "..:/usr/src/xivo-purge-db"
+      - "..:/usr/src/wazo-purge-db"

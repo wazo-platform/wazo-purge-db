@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2015 Avencall
+# Copyright 2015-2019 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
-sample_file = '/tmp/xivo_purge_db.sample'
+sample_file = '/tmp/wazo_purge_db.sample'
 
 
 def sample_plugin(config):

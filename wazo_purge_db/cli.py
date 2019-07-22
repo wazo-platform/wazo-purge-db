@@ -4,6 +4,7 @@
 
 import argparse
 import logging
+import warnings
 import xivo_dao
 
 from stevedore import enabled
@@ -15,8 +16,10 @@ from xivo_dao.helpers.db_utils import session_scope
 
 
 _DEFAULT_CONFIG = {
-    'config_file': '/etc/xivo-purge-db/config.yml',
-    'extra_config_files': '/etc/xivo-purge-db/conf.d/',
+    'pid_file': '/var/run/wazo-purge-db.pid',
+    'log_file': '/var/log/wazo-purge-db.log',
+    'config_file': '/etc/wazo-purge-db/config.yml',
+    'extra_config_files': '/etc/wazo-purge-db/conf.d/',
     'enabled_plugins': {
         'purgers': {
             'call-log': True,
@@ -50,10 +53,15 @@ def main():
         _purge_tables(config)
 
 
+def main_deprecated():
+    warnings.warn("xivo-purge-db is deprecated, please use wazo-purge-db")
+    main()
+
+
 def _load_plugins(config):
     enabled_archives = config['enabled_plugins']['archives']
     check_func = lambda extension: extension.name in enabled_archives
-    enabled.EnabledExtensionManager(namespace='xivo_purge_db.archives',
+    enabled.EnabledExtensionManager(namespace='wazo_purge_db.archives',
                                     check_func=check_func,
                                     invoke_args=(config,),
                                     invoke_on_load=True)

@@ -1,5 +1,5 @@
 #
-# cron jobs for xivo-purge-db
+# cron jobs for wazo-purge-db
 #
 
-25 3 * * * root /usr/bin/xivo-purge-db > /dev/null
+25 3 * * * root /usr/bin/wazo-purge-db > /dev/null

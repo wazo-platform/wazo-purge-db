@@ -8,8 +8,8 @@ test-setup:
 	docker pull wazopbx/wait
 
 test-image:
-	docker build -t wazopbx/xivo-purge-db ..
-	docker build --no-cache -t xivo-purge-db-test -f Dockerfile ..
+	docker build -t wazopbx/wazo-purge-db ..
+	docker build --no-cache -t wazo-purge-db-test -f Dockerfile ..
 
 test: egg-info test-image
 	docker-compose run sync

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2015 Avencall
+# Copyright 2015-2019 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
 import logging
@@ -11,11 +11,11 @@ from hamcrest import assert_that
 from hamcrest import is_
 from unittest import TestCase
 
-extra_config_path = '/etc/xivo-purge-db/conf.d'
+extra_config_path = '/etc/wazo-purge-db/conf.d'
 extra_config_filename = 'extra-config-sample.yml'
 extra_config_file = os.path.join(extra_config_path, extra_config_filename)
 
-sample_output_file = '/tmp/xivo_purge_db.sample'
+sample_output_file = '/tmp/wazo_purge_db.sample'
 
 logger = logging.getLogger(__name__)
 
@@ -45,7 +45,7 @@ class TestSamplePlugin(TestCase):
         logger.info(out)
 
     def test_that_load_plugins_works_with_SamplePlugin(self):
-        self._run_cmd('xivo-purge-db')
+        self._run_cmd('wazo-purge-db')
 
         file_exists = os.path.exists(sample_output_file)
 

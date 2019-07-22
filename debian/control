@@ -1,18 +1,22 @@
-Source: xivo-purge-db
+Source: wazo-purge-db
 Section: python
 Priority: extra
-Maintainer: Wazo Maintainers <dev.wazo@gmail.com>
+Maintainer: Wazo Maintainers <dev@wazo.community>
 Build-Depends: debhelper (>= 9), dh-python, python-all (>= 2.7), python-setuptools
 Standards-Version: 3.9.6
 X-Python-Version: >= 2.7
 
-Package: xivo-purge-db
+Package: wazo-purge-db
 Architecture: all
 Section: python
+Provides: xivo-purge-db
+Conflicts: xivo-purge-db
+Replaces: xivo-purge-db
 Depends: ${python:Depends},
          ${misc:Depends},
-         xivo-libdao (>= 15.06~20150319.161854.821d733-1),
-         xivo-lib-python
+         rename,
+         xivo-lib-python,
+         xivo-libdao
 Description: Wazo database cleaner
  Wazo is a system based on a powerful IPBX, to bring an easy to
  install solution for telephony and related services.
