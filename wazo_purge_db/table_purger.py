@@ -14,9 +14,7 @@ from xivo_dao.alchemy.stat_queue_periodic import StatQueuePeriodic
 from xivo_dao.alchemy.stat_switchboard_queue import StatSwitchboardQueue
 
 
-class TablePurger:
-
-    __metaclass__ = abc.ABCMeta
+class TablePurger(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def purge(self, days_to_keep, session):
