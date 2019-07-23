@@ -14,7 +14,7 @@ from xivo_dao.alchemy.stat_queue_periodic import StatQueuePeriodic
 from xivo_dao.alchemy.stat_switchboard_queue import StatSwitchboardQueue
 
 
-class TablePurger(object):
+class TablePurger:
 
     __metaclass__ = abc.ABCMeta
 
