@@ -13,4 +13,4 @@ RUN python setup.py install
 WORKDIR /usr/src/wazo-purge-db
 RUN cp -r etc/wazo-purge-db /etc
 
-CMD ["nosetests", "integration_tests/suite"]
+CMD ["pytest", "integration_tests/suite"]
