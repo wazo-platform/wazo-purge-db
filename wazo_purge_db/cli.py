@@ -59,8 +59,11 @@ def main_deprecated():
 
 
 def _load_plugins(config):
-    enabled_archives = config['enabled_plugins']['archives']
-    check_func = lambda extension: extension.name in enabled_archives
+
+    def check_func(extension):
+        enabled_archives = config['enabled_plugins']['archives']
+        return extension.name in enabled_archives
+
     enabled.EnabledExtensionManager(
         namespace='wazo_purge_db.archives',
         check_func=check_func,
@@ -70,8 +73,11 @@ def _load_plugins(config):
 
 
 def _purge_tables(config):
-    enabled_purgers = config['enabled_plugins']['purgers']
-    check_func = lambda extension: enabled_purgers.get(extension.name, False)
+
+    def check_func(extension):
+        enabled_purgers = config['enabled_plugins']['purgers']
+        return enabled_purgers.get(extension.name, False)
+
     table_purgers = enabled.EnabledExtensionManager(
         namespace='wazo_purge_db.purgers', check_func=check_func, invoke_on_load=True
     )
