@@ -9,13 +9,14 @@ from hamcrest import empty
 from hamcrest import has_property
 from hamcrest import contains_inanyorder
 
-from xivo_dao.alchemy.stat_queue_periodic import StatQueuePeriodic as StatQueuePeriodicSchema
+from xivo_dao.alchemy.stat_queue_periodic import (
+    StatQueuePeriodic as StatQueuePeriodicSchema,
+)
 from xivo_dao.tests.test_dao import DAOTestCase
 from wazo_purge_db.table_purger import StatQueuePeriodicPurger
 
 
 class TestStatQueuePeriodicPurger(DAOTestCase):
-
     def setUp(self):
         super(TestStatQueuePeriodicPurger, self).setUp()
 
@@ -43,9 +44,15 @@ class TestStatQueuePeriodicPurger(DAOTestCase):
         days_to_keep = 90
         current_time = datetime.now()
 
-        self.add_stat_queue_periodic(time=current_time - timedelta(days=days_to_keep + 1))
-        self.add_stat_queue_periodic(time=current_time - timedelta(days=days_to_keep + 2))
-        self.add_stat_queue_periodic(time=current_time - timedelta(days=days_to_keep + 3))
+        self.add_stat_queue_periodic(
+            time=current_time - timedelta(days=days_to_keep + 1)
+        )
+        self.add_stat_queue_periodic(
+            time=current_time - timedelta(days=days_to_keep + 2)
+        )
+        self.add_stat_queue_periodic(
+            time=current_time - timedelta(days=days_to_keep + 3)
+        )
 
         StatQueuePeriodicPurger().purge(days_to_keep, self.session)
 
@@ -57,32 +64,53 @@ class TestStatQueuePeriodicPurger(DAOTestCase):
         days_to_keep = 90
         current_time = datetime.now()
 
-        id_entry0 = self.add_stat_queue_periodic(time=current_time - timedelta(days=days_to_keep - 1))
-        id_entry1 = self.add_stat_queue_periodic(time=current_time - timedelta(days=days_to_keep - 2))
-        id_entry2 = self.add_stat_queue_periodic(time=current_time - timedelta(days=days_to_keep - 3))
+        id_entry0 = self.add_stat_queue_periodic(
+            time=current_time - timedelta(days=days_to_keep - 1)
+        )
+        id_entry1 = self.add_stat_queue_periodic(
+            time=current_time - timedelta(days=days_to_keep - 2)
+        )
+        id_entry2 = self.add_stat_queue_periodic(
+            time=current_time - timedelta(days=days_to_keep - 3)
+        )
 
         StatQueuePeriodicPurger().purge(days_to_keep, self.session)
 
         result = self.session.query(StatQueuePeriodicSchema).all()
 
-        assert_that(result, contains_inanyorder(has_property('id', id_entry0),
-                                                has_property('id', id_entry1),
-                                                has_property('id', id_entry2)))
+        assert_that(
+            result,
+            contains_inanyorder(
+                has_property('id', id_entry0),
+                has_property('id', id_entry1),
+                has_property('id', id_entry2),
+            ),
+        )
 
     def test_that_StatQueuePeriodicPurger_keep_only_recent_entry(self):
         days_to_keep = 90
         current_time = datetime.now()
 
-        self.add_stat_queue_periodic(time=current_time - timedelta(days=days_to_keep + 1))
-        id_entry1 = self.add_stat_queue_periodic(time=current_time - timedelta(days=days_to_keep - 2))
-        id_entry2 = self.add_stat_queue_periodic(time=current_time - timedelta(days=days_to_keep - 3))
+        self.add_stat_queue_periodic(
+            time=current_time - timedelta(days=days_to_keep + 1)
+        )
+        id_entry1 = self.add_stat_queue_periodic(
+            time=current_time - timedelta(days=days_to_keep - 2)
+        )
+        id_entry2 = self.add_stat_queue_periodic(
+            time=current_time - timedelta(days=days_to_keep - 3)
+        )
 
         StatQueuePeriodicPurger().purge(days_to_keep, self.session)
 
         result = self.session.query(StatQueuePeriodicSchema).all()
 
-        assert_that(result, contains_inanyorder(has_property('id', id_entry1),
-                                                has_property('id', id_entry2)))
+        assert_that(
+            result,
+            contains_inanyorder(
+                has_property('id', id_entry1), has_property('id', id_entry2)
+            ),
+        )
 
     def test_that_StatQueuePeriodicPurger_do_nothing_when_no_entry(self):
         days_to_keep = 90

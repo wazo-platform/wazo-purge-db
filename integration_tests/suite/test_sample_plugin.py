@@ -21,14 +21,15 @@ logger = logging.getLogger(__name__)
 
 
 class TestSamplePlugin(TestCase):
-
     def setUp(self):
-        extra_config = textwrap.dedent("""
+        extra_config = textwrap.dedent(
+            """
             enabled_plugins:
                 archives:
                     - sample
             db_uri: 'postgresql://asterisk:proformatique@db/asterisk'
-            """)
+            """
+        )
 
         with open(extra_config_file, 'w') as config_file:
             config_file.write(extra_config)
@@ -40,7 +41,9 @@ class TestSamplePlugin(TestCase):
             self._run_cmd('rm {}'.format(sample_output_file))
 
     def _run_cmd(self, cmd):
-        process = subprocess.Popen(cmd.split(' '), stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        process = subprocess.Popen(
+            cmd.split(' '), stdout=subprocess.PIPE, stderr=subprocess.STDOUT
+        )
         out, err = process.communicate()
         logger.info(out)
 

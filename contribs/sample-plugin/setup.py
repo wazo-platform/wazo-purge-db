@@ -15,8 +15,6 @@ setup(
     license='GPLv3',
     packages=find_packages(),
     entry_points={
-        'wazo_purge_db.archives': [
-            'sample = wazo_purge_db_sample.sample:sample_plugin',
-        ],
-    }
+        'wazo_purge_db.archives': ['sample = wazo_purge_db_sample.sample:sample_plugin']
+    },
 )

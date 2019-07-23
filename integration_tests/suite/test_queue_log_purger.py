@@ -15,7 +15,6 @@ from wazo_purge_db.table_purger import QueueLogPurger
 
 
 class TestQueueLogPurger(DAOTestCase):
-
     def setUp(self):
         super(TestQueueLogPurger, self).setUp()
 
@@ -51,32 +50,51 @@ class TestQueueLogPurger(DAOTestCase):
         days_to_keep = 90
         current_time = datetime.now()
 
-        id_entry0 = self.add_queue_log(time=current_time - timedelta(days=days_to_keep - 1))
-        id_entry1 = self.add_queue_log(time=current_time - timedelta(days=days_to_keep - 2))
-        id_entry2 = self.add_queue_log(time=current_time - timedelta(days=days_to_keep - 3))
+        id_entry0 = self.add_queue_log(
+            time=current_time - timedelta(days=days_to_keep - 1)
+        )
+        id_entry1 = self.add_queue_log(
+            time=current_time - timedelta(days=days_to_keep - 2)
+        )
+        id_entry2 = self.add_queue_log(
+            time=current_time - timedelta(days=days_to_keep - 3)
+        )
 
         QueueLogPurger().purge(days_to_keep, self.session)
 
         result = self.session.query(QueueLogSchema).all()
 
-        assert_that(result, contains_inanyorder(has_property('id', id_entry0),
-                                                has_property('id', id_entry1),
-                                                has_property('id', id_entry2)))
+        assert_that(
+            result,
+            contains_inanyorder(
+                has_property('id', id_entry0),
+                has_property('id', id_entry1),
+                has_property('id', id_entry2),
+            ),
+        )
 
     def test_that_QueueLogPurger_keep_only_recent_entry(self):
         days_to_keep = 90
         current_time = datetime.now()
 
         self.add_queue_log(time=current_time - timedelta(days=days_to_keep + 1))
-        id_entry1 = self.add_queue_log(time=current_time - timedelta(days=days_to_keep - 2))
-        id_entry2 = self.add_queue_log(time=current_time - timedelta(days=days_to_keep - 3))
+        id_entry1 = self.add_queue_log(
+            time=current_time - timedelta(days=days_to_keep - 2)
+        )
+        id_entry2 = self.add_queue_log(
+            time=current_time - timedelta(days=days_to_keep - 3)
+        )
 
         QueueLogPurger().purge(days_to_keep, self.session)
 
         result = self.session.query(QueueLogSchema).all()
 
-        assert_that(result, contains_inanyorder(has_property('id', id_entry1),
-                                                has_property('id', id_entry2)))
+        assert_that(
+            result,
+            contains_inanyorder(
+                has_property('id', id_entry1), has_property('id', id_entry2)
+            ),
+        )
 
     def test_that_QueueLogPurger_do_nothing_when_no_entry(self):
         days_to_keep = 90

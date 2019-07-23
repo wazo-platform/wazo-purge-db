@@ -27,6 +27,6 @@ setup(
             'stat-call-on = wazo_purge_db.table_purger:StatCallOnQueuePurger',
             'stat-queue = wazo_purge_db.table_purger:StatQueuePeriodicPurger',
             'stat-switchboard = wazo_purge_db.table_purger:StatSwitchboardPurger',
-        ]
-    }
+        ],
+    },
 )

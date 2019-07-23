@@ -15,7 +15,6 @@ from wazo_purge_db.table_purger import CallLogPurger
 
 
 class TestCallLogPurger(DAOTestCase):
-
     def setUp(self):
         super(TestCallLogPurger, self).setUp()
 
@@ -47,32 +46,51 @@ class TestCallLogPurger(DAOTestCase):
         days_to_keep = 90
         current_time = datetime.now()
 
-        id_entry0 = self.add_call_log(date=current_time - timedelta(days=days_to_keep - 1))
-        id_entry1 = self.add_call_log(date=current_time - timedelta(days=days_to_keep - 2))
-        id_entry2 = self.add_call_log(date=current_time - timedelta(days=days_to_keep - 3))
+        id_entry0 = self.add_call_log(
+            date=current_time - timedelta(days=days_to_keep - 1)
+        )
+        id_entry1 = self.add_call_log(
+            date=current_time - timedelta(days=days_to_keep - 2)
+        )
+        id_entry2 = self.add_call_log(
+            date=current_time - timedelta(days=days_to_keep - 3)
+        )
 
         CallLogPurger().purge(days_to_keep, self.session)
 
         result = self.session.query(CallLogSchema).all()
 
-        assert_that(result, contains_inanyorder(has_property('id', id_entry0),
-                                                has_property('id', id_entry1),
-                                                has_property('id', id_entry2)))
+        assert_that(
+            result,
+            contains_inanyorder(
+                has_property('id', id_entry0),
+                has_property('id', id_entry1),
+                has_property('id', id_entry2),
+            ),
+        )
 
     def test_that_CallLogPurger_keep_only_recent_entry(self):
         days_to_keep = 90
         current_time = datetime.now()
 
         self.add_call_log(date=current_time - timedelta(days=days_to_keep + 1))
-        id_entry1 = self.add_call_log(date=current_time - timedelta(days=days_to_keep - 2))
-        id_entry2 = self.add_call_log(date=current_time - timedelta(days=days_to_keep - 3))
+        id_entry1 = self.add_call_log(
+            date=current_time - timedelta(days=days_to_keep - 2)
+        )
+        id_entry2 = self.add_call_log(
+            date=current_time - timedelta(days=days_to_keep - 3)
+        )
 
         CallLogPurger().purge(days_to_keep, self.session)
 
         result = self.session.query(CallLogSchema).all()
 
-        assert_that(result, contains_inanyorder(has_property('id', id_entry1),
-                                                has_property('id', id_entry2)))
+        assert_that(
+            result,
+            contains_inanyorder(
+                has_property('id', id_entry1), has_property('id', id_entry2)
+            ),
+        )
 
     def test_that_CallLogPurger_do_nothing_when_no_entry(self):
         days_to_keep = 90
