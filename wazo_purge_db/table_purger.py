@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
-# Copyright (C) 2015 Avencall
-# SPDX-License-Identifier: GPL-3.0+
+# Copyright 2015-2019 The Wazo Authors  (see the AUTHORS file)
+# SPDX-License-Identifier: GPL-3.0-or-later
 
 import abc
 import datetime
@@ -15,9 +14,7 @@ from xivo_dao.alchemy.stat_queue_periodic import StatQueuePeriodic
 from xivo_dao.alchemy.stat_switchboard_queue import StatSwitchboardQueue
 
 
-class TablePurger(object):
-
-    __metaclass__ = abc.ABCMeta
+class TablePurger(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def purge(self, days_to_keep, session):
@@ -25,77 +22,63 @@ class TablePurger(object):
 
 
 class CallLogPurger(TablePurger):
-
     def purge(self, days_to_keep, session):
-        query = (CallLog.__table__
-                 .delete()
-                 .where(CallLog.date
-                        < (func.localtimestamp() - datetime.timedelta(days=days_to_keep)))
-                 )
+        query = CallLog.__table__.delete().where(
+            CallLog.date
+            < (func.localtimestamp() - datetime.timedelta(days=days_to_keep))
+        )
         session.execute(query)
 
 
 class CELPurger(TablePurger):
-
     def purge(self, days_to_keep, session):
-        query = (CEL.__table__
-                 .delete()
-                 .where(CEL.eventtime
-                        < (func.localtimestamp() - datetime.timedelta(days=days_to_keep)))
-                 )
+        query = CEL.__table__.delete().where(
+            CEL.eventtime
+            < (func.localtimestamp() - datetime.timedelta(days=days_to_keep))
+        )
         session.execute(query)
 
 
 class QueueLogPurger(TablePurger):
-
     def purge(self, days_to_keep, session):
-        query = (QueueLog.__table__
-                 .delete()
-                 .where(func.to_timestamp(QueueLog.time, 'YYYY-MM-DD HH24:MI:SS')
-                        < (func.localtimestamp() - datetime.timedelta(days=days_to_keep)))
-                 )
+        query = QueueLog.__table__.delete().where(
+            func.to_timestamp(QueueLog.time, 'YYYY-MM-DD HH24:MI:SS')
+            < (func.localtimestamp() - datetime.timedelta(days=days_to_keep))
+        )
         session.execute(query)
 
 
 class StatAgentPeriodicPurger(TablePurger):
-
     def purge(self, days_to_keep, session):
-        query = (StatAgentPeriodic.__table__
-                 .delete()
-                 .where(StatAgentPeriodic.time
-                        < (func.localtimestamp() - datetime.timedelta(days=days_to_keep)))
-                 )
+        query = StatAgentPeriodic.__table__.delete().where(
+            StatAgentPeriodic.time
+            < (func.localtimestamp() - datetime.timedelta(days=days_to_keep))
+        )
         session.execute(query)
 
 
 class StatCallOnQueuePurger(TablePurger):
-
     def purge(self, days_to_keep, session):
-        query = (StatCallOnQueue.__table__
-                 .delete()
-                 .where(StatCallOnQueue.time
-                        < (func.localtimestamp() - datetime.timedelta(days=days_to_keep)))
-                 )
+        query = StatCallOnQueue.__table__.delete().where(
+            StatCallOnQueue.time
+            < (func.localtimestamp() - datetime.timedelta(days=days_to_keep))
+        )
         session.execute(query)
 
 
 class StatQueuePeriodicPurger(TablePurger):
-
     def purge(self, days_to_keep, session):
-        query = (StatQueuePeriodic.__table__
-                 .delete()
-                 .where(StatQueuePeriodic.time
-                        < (func.localtimestamp() - datetime.timedelta(days=days_to_keep)))
-                 )
+        query = StatQueuePeriodic.__table__.delete().where(
+            StatQueuePeriodic.time
+            < (func.localtimestamp() - datetime.timedelta(days=days_to_keep))
+        )
         session.execute(query)
 
 
 class StatSwitchboardPurger(TablePurger):
-
     def purge(self, days_to_keep, session):
-        query = (StatSwitchboardQueue.__table__
-                 .delete()
-                 .where(StatSwitchboardQueue.time
-                        < (func.localtimestamp() - datetime.timedelta(days=days_to_keep)))
-                 )
+        query = StatSwitchboardQueue.__table__.delete().where(
+            StatSwitchboardQueue.time
+            < (func.localtimestamp() - datetime.timedelta(days=days_to_keep))
+        )
         session.execute(query)

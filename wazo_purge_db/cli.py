@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
 # Copyright 2016-2019 The Wazo Authors  (see the AUTHORS file)
-# SPDX-License-Identifier: GPL-3.0+
+# SPDX-License-Identifier: GPL-3.0-or-later
 
 import argparse
 import logging
@@ -30,7 +29,7 @@ _DEFAULT_CONFIG = {
             'stat-queue': True,
             'stat-switchboard': True,
         },
-        'archives': []
+        'archives': [],
     },
     'days_to_keep': 365,
 }
@@ -59,27 +58,35 @@ def main_deprecated():
 
 
 def _load_plugins(config):
-    enabled_archives = config['enabled_plugins']['archives']
-    check_func = lambda extension: extension.name in enabled_archives
-    enabled.EnabledExtensionManager(namespace='wazo_purge_db.archives',
-                                    check_func=check_func,
-                                    invoke_args=(config,),
-                                    invoke_on_load=True)
+
+    def check_func(extension):
+        enabled_archives = config['enabled_plugins']['archives']
+        return extension.name in enabled_archives
+
+    enabled.EnabledExtensionManager(
+        namespace='wazo_purge_db.archives',
+        check_func=check_func,
+        invoke_args=(config,),
+        invoke_on_load=True,
+    )
 
 
 def _purge_tables(config):
-    enabled_purgers = config['enabled_plugins']['purgers']
-    check_func = lambda extension: enabled_purgers.get(extension.name, False)
+
+    def check_func(extension):
+        enabled_purgers = config['enabled_plugins']['purgers']
+        return enabled_purgers.get(extension.name, False)
+
     table_purgers = enabled.EnabledExtensionManager(
-        namespace='wazo_purge_db.purgers',
-        check_func=check_func,
-        invoke_on_load=True
+        namespace='wazo_purge_db.purgers', check_func=check_func, invoke_on_load=True
     )
     with session_scope() as session:
         for purger in table_purgers:
             days_to_keep = config['days_to_keep']
-            logger.info('%s purger: deleting entries older than %s days'.
-                        purger.name, days_to_keep)
+            logger.info(
+                '%s purger: deleting entries older than %s days'.purger.name,
+                days_to_keep,
+            )
             purger.obj.purge(days_to_keep, session)
             logger.debug('%s purger: finished', purger.name)
 
@@ -87,9 +94,12 @@ def _purge_tables(config):
 def _parse_args():
     config = {}
     parser = argparse.ArgumentParser()
-    parser.add_argument('-d', '--days_to_keep',
-                        type=int,
-                        help='Number of days data will be kept in tables')
+    parser.add_argument(
+        '-d',
+        '--days_to_keep',
+        type=int,
+        help='Number of days data will be kept in tables',
+    )
 
     parsed_args = parser.parse_args()
     if parsed_args.days_to_keep is not None:
