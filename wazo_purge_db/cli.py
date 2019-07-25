@@ -58,7 +58,6 @@ def main_deprecated():
 
 
 def _load_plugins(config):
-
     def check_func(extension):
         enabled_archives = config['enabled_plugins']['archives']
         return extension.name in enabled_archives
@@ -72,7 +71,6 @@ def _load_plugins(config):
 
 
 def _purge_tables(config):
-
     def check_func(extension):
         enabled_purgers = config['enabled_plugins']['purgers']
         return enabled_purgers.get(extension.name, False)

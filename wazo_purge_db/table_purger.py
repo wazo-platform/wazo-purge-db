@@ -15,7 +15,6 @@ from xivo_dao.alchemy.stat_switchboard_queue import StatSwitchboardQueue
 
 
 class TablePurger(metaclass=abc.ABCMeta):
-
     @abc.abstractmethod
     def purge(self, days_to_keep, session):
         pass
