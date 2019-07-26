@@ -85,7 +85,7 @@ def _purge_tables(config):
                 purger.name, config['days_to_keep']
             )
             logger.info(
-                '%s purger: deleting entries older than %s days'.purger.name,
+                '%s purger: deleting entries older than %s days', purger.name,
                 days_to_keep,
             )
             purger.obj.purge(days_to_keep, session)
