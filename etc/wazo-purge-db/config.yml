@@ -12,7 +12,6 @@ log_file: '/var/log/wazo-purge-db.log'
 # Database connection informations.
 db_uri: 'postgresql://asterisk:proformatique@localhost/asterisk'
 
-days_to_keep: 365
 debug: False
 
 enabled_plugins:
@@ -26,3 +25,9 @@ enabled_plugins:
         stat-switchboard: true
 #    archives:
 #        - sample
+#
+
+days_to_keep: 365
+# days_to_keep_per_plugin:
+#     call-log: 31
+
