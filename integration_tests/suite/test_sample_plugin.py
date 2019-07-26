@@ -63,8 +63,7 @@ class TestSamplePlugin(TestCase):
 
         with open(archive_output_file, 'r') as f:
             archive_content = f.read()
-            assert_that(archive_content,
-                        "Save tables before purge. 123 days to keep!")
+            assert_that(archive_content, "Save tables before purge. 123 days to keep!")
 
         file_exists = os.path.exists(purge_output_file)
 

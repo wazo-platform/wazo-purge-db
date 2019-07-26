@@ -16,6 +16,4 @@ class PurgePlugin:
     @staticmethod
     def purge(days_to_keep, session):
         with open(purger_file, 'w') as output:
-            output.write(
-                'Purged, {0} days keeped!'.format(days_to_keep)
-            )
+            output.write('Purged, {0} days keeped!'.format(days_to_keep))
