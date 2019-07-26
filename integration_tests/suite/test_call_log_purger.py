@@ -14,15 +14,10 @@ from wazo_purge_db.table_purger import CallLogPurger
 
 
 class TestCallLogPurger(DAOTestCase):
-    def setUp(self):
-        super(TestCallLogPurger, self).setUp()
-
-    def tearDown(self):
-        super(TestCallLogPurger, self).tearDown()
-
     def add_call_log(self, **kwargs):
         kwargs.setdefault('id', self._generate_int())
         kwargs.setdefault('date', datetime.now())
+        kwargs.setdefault('tenant_uuid', self.default_tenant.uuid)
         call_log = CallLogSchema(**kwargs)
         self.add_me(call_log)
         return call_log.id
