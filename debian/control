@@ -12,7 +12,7 @@ Section: python
 Provides: xivo-purge-db
 Conflicts: xivo-purge-db
 Replaces: xivo-purge-db
-Depends: ${python:Depends},
+Depends: ${python3:Depends},
          ${misc:Depends},
          rename,
          xivo-lib-python-python3,
