@@ -4,7 +4,7 @@ egg-info:
 	(cd .. && python setup.py egg_info)
 
 test-setup:
-	docker pull postgres:9.6
+	docker pull postgres:11
 	docker pull wazopbx/wait
 
 test-image:
