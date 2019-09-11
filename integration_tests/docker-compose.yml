@@ -9,7 +9,7 @@ services:
       TIMEOUT: ${INTEGRATION_TEST_TIMEOUT}
 
   db:
-    image: postgres:9.6
+    image: postgres:11
     expose:
      - "5432"
     environment:
