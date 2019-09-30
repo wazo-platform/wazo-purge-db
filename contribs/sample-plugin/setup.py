@@ -10,7 +10,7 @@ setup(
     description='XiVO sample plugin for archive before database clean',
     author='Avencall',
     author_email='dev@avencall.com',
-    url='https://github.com/wazo-pbx/wazo-purge-db',
+    url='https://github.com/wazo-platform/wazo-purge-db',
     license='GPLv3',
     packages=find_packages(),
     entry_points={
