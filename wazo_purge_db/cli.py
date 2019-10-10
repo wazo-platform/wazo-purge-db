@@ -15,7 +15,7 @@ from xivo_dao.helpers.db_utils import session_scope
 
 
 _DEFAULT_CONFIG = {
-    'pid_file': '/var/run/wazo-purge-db.pid',
+    'pid_file': '/run/wazo-purge-db.pid',
     'log_file': '/var/log/wazo-purge-db.log',
     'config_file': '/etc/wazo-purge-db/config.yml',
     'extra_config_files': '/etc/wazo-purge-db/conf.d/',
