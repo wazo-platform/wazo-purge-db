@@ -2,8 +2,8 @@ FROM python:3.7-buster
 
 RUN mkdir -p /etc/wazo-purge-db/conf.d
 
-RUN mkdir -p /var/run/wazo-purge-db
-RUN chmod a+w /var/run/wazo-purge-db
+RUN mkdir -p /run/wazo-purge-db
+RUN chmod a+w /run/wazo-purge-db
 
 RUN touch /var/log/wazo-purge-db.log
 RUN chown www-data: /var/log/wazo-purge-db.log
