@@ -1,18 +1,16 @@
-.PHONY: test test-image test-setup egg-info
-
 egg-info:
 	(cd .. && python setup.py egg_info)
 
-test-setup:
-	docker pull postgres:11
-	docker pull wazopbx/wait
+test-setup: egg-info test-image
 
 test-image:
 	docker build -t wazopbx/wazo-purge-db ..
 	docker build --no-cache -t wazo-purge-db-test -f Dockerfile ..
 
-test: egg-info test-image
+test:
 	docker-compose run sync
 	docker-compose run purgedb
 	docker-compose kill
 	docker-compose rm -f
+
+.PHONY: test test-image test-setup egg-info
