@@ -5,15 +5,7 @@
 
 case "$1" in
     configure)
-        # migrate from xivo-purge-db
-        if [ -f /var/log/xivo-purge-db.log ] ; then
-            rename 's/xivo-purge-db/wazo-purge-db/g' /var/log/xivo-purge-db.log*
-        fi
-        if [ -d /etc/xivo-purge-db/conf.d ] ; then
-            find /etc/xivo-purge-db/conf.d/ -mindepth 1 -exec mv {} /etc/wazo-purge-db/conf.d/ \;
-            rmdir --ignore-fail-on-non-empty -p /etc/xivo-purge-db/conf.d
-        fi
-        # End of migration from xivo-purge-db
+
     ;;
     abort-upgrade|abort-remove|abort-deconfigure)
 
