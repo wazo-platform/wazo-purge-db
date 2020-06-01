@@ -2,7 +2,7 @@ FROM wazopbx/wazo-purge-db
 
 ENV PYTHONDONTWRITEBYTECODE='true'
 
-ADD . /usr/src/wazo-purge-db
+COPY . /usr/src/wazo-purge-db
 WORKDIR /usr/src/wazo-purge-db
 
 RUN pip install -Ur requirements.txt

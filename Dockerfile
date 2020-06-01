@@ -1,19 +1,24 @@
-FROM python:3.7-buster
+FROM python:3.7-slim-buster AS compile-image
+LABEL maintainer="Wazo Maintainers <dev@wazo.community>"
 
-RUN mkdir -p /etc/wazo-purge-db/conf.d
+RUN python -m venv /opt/venv
+# Activate virtual env
+ENV PATH="/opt/venv/bin:$PATH"
 
-RUN mkdir -p /run/wazo-purge-db
-RUN chmod a+w /run/wazo-purge-db
-
-RUN touch /var/log/wazo-purge-db.log
-RUN chown www-data: /var/log/wazo-purge-db.log
-
-ADD . /usr/src/wazo-purge-db
+COPY . /usr/src/wazo-purge-db
 WORKDIR /usr/src/wazo-purge-db
-
 RUN pip install -r requirements.txt
+RUN python setup.py install
 
-RUN cp -r etc/ /etc
-RUN ./setup.py install
+FROM python:3.7-slim-buster AS build-image
+COPY --from=compile-image /opt/venv /opt/venv
 
+COPY ./etc/wazo-purge-db /etc/wazo-purge-db
+RUN true \
+    && mkdir -p /etc/wazo-purge-db/conf.d \
+    && install -d -o www-data -g www-data /run/wazo-purge-db/ \
+    && install -o www-data -g www-data /dev/null /var/log/wazo-purge-db.log
+
+# Activate virtual env
+ENV PATH="/opt/venv/bin:$PATH"
 CMD ["wazo-purge-db"]
