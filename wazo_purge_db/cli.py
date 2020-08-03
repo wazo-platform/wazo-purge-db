@@ -1,4 +1,4 @@
-# Copyright 2016-2019 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2016-2020 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import argparse
@@ -43,7 +43,7 @@ def main():
     file_config = read_config_file_hierarchy(ChainMap(cli_config, _DEFAULT_CONFIG))
     config = ChainMap(cli_config, file_config, _DEFAULT_CONFIG)
 
-    setup_logging(config['log_file'], foreground=True, debug=config['debug'])
+    setup_logging(config['log_file'], debug=config['debug'])
 
     xivo_dao.init_db_from_config(config)
 
