@@ -47,7 +47,7 @@ def main():
 
     xivo_dao.init_db_from_config(config)
 
-    with pidfile_context(config['pid_file'], foreground=True):
+    with pidfile_context(config['pid_file']):
         if 'archives' in config.get('enabled_plugins', {}):
             _load_plugins(config)
         _purge_tables(config)
