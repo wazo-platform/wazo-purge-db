@@ -1,4 +1,4 @@
-FROM wazopbx/wazo-purge-db
+FROM wazoplatform/wazo-purge-db
 
 ENV PYTHONDONTWRITEBYTECODE='true'
 

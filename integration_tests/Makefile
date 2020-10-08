@@ -4,7 +4,7 @@ egg-info:
 test-setup: egg-info test-image
 
 test-image:
-	docker build -t wazopbx/wazo-purge-db ..
+	docker build -t wazoplatform/wazo-purge-db ..
 	docker build --no-cache -t wazo-purge-db-test -f Dockerfile ..
 
 test:
