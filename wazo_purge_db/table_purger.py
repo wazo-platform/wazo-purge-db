@@ -1,4 +1,4 @@
-# Copyright 2015-2019 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2020 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import abc
@@ -23,8 +23,7 @@ class TablePurger(metaclass=abc.ABCMeta):
 class CallLogPurger(TablePurger):
     def purge(self, days_to_keep, session):
         query = CallLog.__table__.delete().where(
-            CallLog.date
-            < (func.localtimestamp() - datetime.timedelta(days=days_to_keep))
+            CallLog.date < (func.now() - datetime.timedelta(days=days_to_keep))
         )
         session.execute(query)
 
@@ -32,8 +31,7 @@ class CallLogPurger(TablePurger):
 class CELPurger(TablePurger):
     def purge(self, days_to_keep, session):
         query = CEL.__table__.delete().where(
-            CEL.eventtime
-            < (func.localtimestamp() - datetime.timedelta(days=days_to_keep))
+            CEL.eventtime < (func.now() - datetime.timedelta(days=days_to_keep))
         )
         session.execute(query)
 
@@ -41,8 +39,7 @@ class CELPurger(TablePurger):
 class QueueLogPurger(TablePurger):
     def purge(self, days_to_keep, session):
         query = QueueLog.__table__.delete().where(
-            func.to_timestamp(QueueLog.time, 'YYYY-MM-DD HH24:MI:SS')
-            < (func.localtimestamp() - datetime.timedelta(days=days_to_keep))
+            QueueLog.time < (func.now() - datetime.timedelta(days=days_to_keep))
         )
         session.execute(query)
 
@@ -51,7 +48,7 @@ class StatAgentPeriodicPurger(TablePurger):
     def purge(self, days_to_keep, session):
         query = StatAgentPeriodic.__table__.delete().where(
             StatAgentPeriodic.time
-            < (func.localtimestamp() - datetime.timedelta(days=days_to_keep))
+            < (func.now() - datetime.timedelta(days=days_to_keep))
         )
         session.execute(query)
 
@@ -59,8 +56,7 @@ class StatAgentPeriodicPurger(TablePurger):
 class StatCallOnQueuePurger(TablePurger):
     def purge(self, days_to_keep, session):
         query = StatCallOnQueue.__table__.delete().where(
-            StatCallOnQueue.time
-            < (func.localtimestamp() - datetime.timedelta(days=days_to_keep))
+            StatCallOnQueue.time < (func.now() - datetime.timedelta(days=days_to_keep))
         )
         session.execute(query)
 
@@ -69,7 +65,7 @@ class StatQueuePeriodicPurger(TablePurger):
     def purge(self, days_to_keep, session):
         query = StatQueuePeriodic.__table__.delete().where(
             StatQueuePeriodic.time
-            < (func.localtimestamp() - datetime.timedelta(days=days_to_keep))
+            < (func.now() - datetime.timedelta(days=days_to_keep))
         )
         session.execute(query)
 
