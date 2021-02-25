@@ -1,4 +1,4 @@
-# Copyright 2016-2020 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2016-2021 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import argparse
@@ -21,7 +21,6 @@ _DEFAULT_CONFIG = {
     'extra_config_files': '/etc/wazo-purge-db/conf.d/',
     'enabled_plugins': {
         'purgers': {
-            'call-log': True,
             'cel': True,
             'queue-log': True,
             'stat-agent': True,
