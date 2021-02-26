@@ -1,11 +1,10 @@
-# Copyright 2015-2020 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2021 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import abc
 import datetime
 
 from sqlalchemy import func
-from xivo_dao.alchemy.call_log import CallLog
 from xivo_dao.alchemy.cel import CEL
 from xivo_dao.alchemy.queue_log import QueueLog
 from xivo_dao.alchemy.stat_agent_periodic import StatAgentPeriodic
@@ -18,14 +17,6 @@ class TablePurger(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def purge(self, days_to_keep, session):
         pass
-
-
-class CallLogPurger(TablePurger):
-    def purge(self, days_to_keep, session):
-        query = CallLog.__table__.delete().where(
-            CallLog.date < (func.now() - datetime.timedelta(days=days_to_keep))
-        )
-        session.execute(query)
 
 
 class CELPurger(TablePurger):

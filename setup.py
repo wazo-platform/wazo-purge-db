@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright 2015-2019 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2021 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from setuptools import setup
@@ -21,7 +21,6 @@ setup(
             'xivo-purge-db = wazo_purge_db.cli:main_compat',
         ],
         'wazo_purge_db.purgers': [
-            'call-log = wazo_purge_db.table_purger:CallLogPurger',
             'cel = wazo_purge_db.table_purger:CELPurger',
             'queue-log = wazo_purge_db.table_purger:QueueLogPurger',
             'stat-agent = wazo_purge_db.table_purger:StatAgentPeriodicPurger',

@@ -16,7 +16,6 @@ debug: False
 
 enabled_plugins:
     purgers:
-        call-log: true
         cel: true
         queue-log: true
         stat-agent: true
@@ -29,5 +28,5 @@ enabled_plugins:
 
 days_to_keep: 365
 # days_to_keep_per_plugin:
-#     call-log: 31
+#     cel: 31
 
