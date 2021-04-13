@@ -39,3 +39,4 @@ cd integration_tests
 docker-compose run sync
 docker-compose run purgedb  # repeat to run the tests against new code
 ```
+
