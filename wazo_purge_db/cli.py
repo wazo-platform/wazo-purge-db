@@ -13,7 +13,6 @@ from xivo.daemonize import pidfile_context
 from xivo.xivo_logging import setup_logging
 from xivo_dao.helpers.db_utils import session_scope
 
-
 _DEFAULT_CONFIG = {
     'pid_file': '/run/wazo-purge-db.pid',
     'log_file': '/var/log/wazo-purge-db.log',
@@ -50,11 +49,6 @@ def main():
         if 'archives' in config.get('enabled_plugins', {}):
             _load_plugins(config)
         _purge_tables(config)
-
-
-def main_deprecated():
-    warnings.warn("xivo-purge-db is deprecated, please use wazo-purge-db")
-    main()
 
 
 def _load_plugins(config):
