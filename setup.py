@@ -18,7 +18,6 @@ setup(
     entry_points={
         'console_scripts': [
             'wazo-purge-db = wazo_purge_db.cli:main',
-            'xivo-purge-db = wazo_purge_db.cli:main_compat',
         ],
         'wazo_purge_db.purgers': [
             'cel = wazo_purge_db.table_purger:CELPurger',
