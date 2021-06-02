@@ -3,7 +3,6 @@
 
 import argparse
 import logging
-import warnings
 import xivo_dao
 
 from stevedore import enabled
