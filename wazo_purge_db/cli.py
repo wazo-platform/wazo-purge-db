@@ -3,7 +3,6 @@
 
 import argparse
 import logging
-import warnings
 import xivo_dao
 
 from stevedore import enabled
@@ -12,7 +11,6 @@ from xivo.config_helper import read_config_file_hierarchy
 from xivo.daemonize import pidfile_context
 from xivo.xivo_logging import setup_logging
 from xivo_dao.helpers.db_utils import session_scope
-
 
 _DEFAULT_CONFIG = {
     'pid_file': '/run/wazo-purge-db.pid',
@@ -50,11 +48,6 @@ def main():
         if 'archives' in config.get('enabled_plugins', {}):
             _load_plugins(config)
         _purge_tables(config)
-
-
-def main_deprecated():
-    warnings.warn("xivo-purge-db is deprecated, please use wazo-purge-db")
-    main()
 
 
 def _load_plugins(config):
