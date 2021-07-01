@@ -10,7 +10,7 @@ pid_file: '/run/wazo-purge-db.pid'
 log_file: '/var/log/wazo-purge-db.log'
 
 # Database connection informations.
-db_uri: 'postgresql://asterisk:proformatique@localhost/asterisk'
+db_uri: 'postgresql://asterisk:proformatique@localhost/asterisk?application_name=wazo-purge-db'
 
 debug: False
 
