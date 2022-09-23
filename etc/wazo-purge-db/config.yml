@@ -1,17 +1,17 @@
 # This file should not be modified as it may get changed by the maintainer.
-# Add extra configuration files in the extra_config_files directory to override
-# the content from this file
+# Add extra configuration files to the extra_config_files directory to override
+# the settings in this file
 
-# Extra configuration directory where the config files overriding this file
-# should be.
+# Directory in which to place config overrides
 extra_config_files: '/etc/wazo-purge-db/conf.d/'
 
 pid_file: '/run/wazo-purge-db.pid'
 log_file: '/var/log/wazo-purge-db.log'
 
-# Database connection informations.
+# Database connection settings
 db_uri: 'postgresql://asterisk:proformatique@localhost/asterisk?application_name=wazo-purge-db'
 
+# Change the log level to debug level.
 debug: False
 
 enabled_plugins:
