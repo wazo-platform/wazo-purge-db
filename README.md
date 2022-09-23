@@ -2,7 +2,7 @@ wazo-purge-db
 =============
 [![Build Status](https://jenkins.wazo.community/buildStatus/icon?job=wazo-purge-db)](https://jenkins.wazo.community/job/wazo-purge-db)
 
-wazo-purge-db is a service for deleting (and optionally backup) old database entries on a Wazo server
+wazo-purge-db is a service for deleting (and optionally backing up) old database entries on a Wazo server
 
 
 Running unit tests
