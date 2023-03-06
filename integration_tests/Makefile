@@ -10,6 +10,8 @@ test-image:
 test:
 	docker-compose run sync
 	docker-compose run purgedb
+	# Let time to container to stop
+	sleep 2
 	docker-compose kill
 	docker-compose rm -f
 
