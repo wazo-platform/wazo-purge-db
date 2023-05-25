@@ -1,4 +1,4 @@
-# Copyright 2015-2019 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2023 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from datetime import datetime, timedelta
@@ -15,10 +15,10 @@ from wazo_purge_db.table_purger import CELPurger
 
 class TestCELPurger(DAOTestCase):
     def setUp(self):
-        super(TestCELPurger, self).setUp()
+        super().setUp()
 
     def tearDown(self):
-        super(TestCELPurger, self).tearDown()
+        super().tearDown()
 
     def test_that_CELPurger_keep_nothing_when_no_recent_entry(self):
         days_to_keep = 90

@@ -1,4 +1,4 @@
-# Copyright 2015-2019 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2023 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import logging
@@ -41,11 +41,11 @@ class TestSamplePlugin(TestCase):
 
     def tearDown(self):
         if os.path.exists(extra_config_file):
-            self._run_cmd('rm {}'.format(extra_config_file))
+            self._run_cmd(f'rm {extra_config_file}')
         if os.path.exists(archive_output_file):
-            self._run_cmd('rm {}'.format(archive_output_file))
+            self._run_cmd(f'rm {archive_output_file}')
         if os.path.exists(purge_output_file):
-            self._run_cmd('rm {}'.format(purge_output_file))
+            self._run_cmd(f'rm {purge_output_file}')
 
     def _run_cmd(self, cmd):
         process = subprocess.Popen(
@@ -61,7 +61,7 @@ class TestSamplePlugin(TestCase):
 
         assert_that(file_exists, is_(True))
 
-        with open(archive_output_file, 'r') as f:
+        with open(archive_output_file) as f:
             archive_content = f.read()
             assert_that(archive_content, "Save tables before purge. 123 days to keep!")
 
@@ -69,6 +69,6 @@ class TestSamplePlugin(TestCase):
 
         assert_that(file_exists, is_(True))
 
-        with open(purge_output_file, 'r') as f:
+        with open(purge_output_file) as f:
             purge_content = f.read()
             assert_that(purge_content, "Purged, 30 days keeped!")

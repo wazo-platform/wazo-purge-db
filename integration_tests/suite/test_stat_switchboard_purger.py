@@ -1,4 +1,4 @@
-# Copyright 2016-2019 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2016-2023 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from datetime import datetime, timedelta
@@ -16,7 +16,7 @@ from wazo_purge_db.table_purger import StatSwitchboardPurger
 
 class TestStatSwitchboardPurger(DAOTestCase):
     def setUp(self):
-        super(TestStatSwitchboardPurger, self).setUp()
+        super().setUp()
         self.stat_switchboard_queue = QueueFeatures(
             name='stat_switchboard_queue',
             displayname='stat_switchboard_queue',
