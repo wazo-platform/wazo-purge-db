@@ -1,4 +1,4 @@
-# Copyright 2015-2019 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2023 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from datetime import datetime, timedelta
@@ -17,10 +17,10 @@ from wazo_purge_db.table_purger import StatAgentPeriodicPurger
 
 class TestStatAgentPeriodicPurger(DAOTestCase):
     def setUp(self):
-        super(TestStatAgentPeriodicPurger, self).setUp()
+        super().setUp()
 
     def tearDown(self):
-        super(TestStatAgentPeriodicPurger, self).tearDown()
+        super().tearDown()
 
     def add_stat_agent_periodic(self, **kwargs):
         kwargs.setdefault('id', self._generate_int())
