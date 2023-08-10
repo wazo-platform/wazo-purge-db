@@ -7,10 +7,10 @@ WORKDIR /usr/src/wazo-purge-db
 
 RUN pip install -Ur requirements.txt
 RUN pip install -Ur integration_tests/requirements.txt
-RUN python setup.py develop
+RUN python3 -m pip install -e .
 
 WORKDIR contribs/sample-plugin
-RUN python setup.py install
+RUN python3 -m pip install .
 
 WORKDIR /usr/src/wazo-purge-db
 RUN cp -r etc/wazo-purge-db /etc
