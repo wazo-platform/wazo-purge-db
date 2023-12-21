@@ -5,10 +5,9 @@ import logging
 import os
 import subprocess
 import textwrap
-
-from hamcrest import assert_that
-from hamcrest import is_
 from unittest import TestCase
+
+from hamcrest import assert_that, is_
 
 extra_config_path = '/etc/wazo-purge-db/conf.d'
 extra_config_filename = 'extra-config-sample.yml'
