@@ -29,4 +29,3 @@ enabled_plugins:
 days_to_keep: 365
 # days_to_keep_per_plugin:
 #     cel: 31
-

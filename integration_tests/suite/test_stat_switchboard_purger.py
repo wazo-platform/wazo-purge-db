@@ -3,14 +3,11 @@
 
 from datetime import datetime, timedelta
 
-from hamcrest import assert_that
-from hamcrest import contains_inanyorder
-from hamcrest import empty
-from hamcrest import has_property
-
+from hamcrest import assert_that, contains_inanyorder, empty, has_property
 from xivo_dao.alchemy.queuefeatures import QueueFeatures
 from xivo_dao.alchemy.stat_switchboard_queue import StatSwitchboardQueue
 from xivo_dao.tests.test_dao import DAOTestCase
+
 from wazo_purge_db.table_purger import StatSwitchboardPurger
 
 
