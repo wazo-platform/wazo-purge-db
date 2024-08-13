@@ -21,6 +21,6 @@ services:
   purgedb:
     image: wazo-purge-db-test
     environment:
-      - XIVO_TEST_DB_URL=postgresql://asterisk:proformatique@db/asterisk
+      - WAZO_TEST_DB_URL=postgresql://asterisk:proformatique@db/asterisk
     volumes:
       - "..:/usr/src/wazo-purge-db"
